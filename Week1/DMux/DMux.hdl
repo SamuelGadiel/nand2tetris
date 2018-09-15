@@ -1,0 +1,17 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/DMux.hdl
+
+// Modificado por Samuel Gadiel de Ávila.
+
+CHIP DMux {
+    IN in, sel;
+    OUT a, b;
+
+    PARTS:
+    Not (in=sel, out=nsel);
+
+    And (a=in, b=nsel, out=a);
+    And (a=in, b=sel, out=b);
+}

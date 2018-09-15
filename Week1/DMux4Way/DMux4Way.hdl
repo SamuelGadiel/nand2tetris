@@ -1,0 +1,26 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/DMux4Way.hdl
+
+// Modificado por Samuel Gadiel de Ávila.
+
+CHIP DMux4Way {
+    IN in, sel[2];
+    OUT a, b, c, d;
+
+
+    PARTS:
+    Not (in=sel[0], out=nsel0);
+    Not (in=sel[1], out=nsel1);
+
+    And (a=nsel0, b=nsel1, out=sel00);
+    And (a=sel[0], b=nsel1, out=sel01);
+    And (a=nsel0, b=sel[1], out=sel10);
+    And (a=sel[0], b=sel[1], out=sel11);
+
+    And (a=in, b=sel00, out=a);
+    And (a=in, b=sel01, out=b);
+    And (a=in, b=sel10, out=c);
+    And (a=in, b=sel11, out=d);
+}

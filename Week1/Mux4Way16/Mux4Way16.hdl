@@ -1,0 +1,30 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/Mux4Way16.hdl
+
+// Modificado por Samuel Gadiel de Ávila.
+
+CHIP Mux4Way16 {
+    IN a[16], b[16], c[16], d[16], sel[2];
+    OUT out[16];
+
+    PARTS:
+
+    Mux4Way (a=a[0], b=b[0], c=c[0], d=d[0], sel=sel, out=out[0]);
+    Mux4Way (a=a[1], b=b[1], c=c[1], d=d[1], sel=sel, out=out[1]);
+    Mux4Way (a=a[2], b=b[2], c=c[2], d=d[2], sel=sel, out=out[2]);
+    Mux4Way (a=a[3], b=b[3], c=c[3], d=d[3], sel=sel, out=out[3]);
+    Mux4Way (a=a[4], b=b[4], c=c[4], d=d[4], sel=sel, out=out[4]);
+    Mux4Way (a=a[5], b=b[5], c=c[5], d=d[5], sel=sel, out=out[5]);
+    Mux4Way (a=a[6], b=b[6], c=c[6], d=d[6], sel=sel, out=out[6]);
+    Mux4Way (a=a[7], b=b[7], c=c[7], d=d[7], sel=sel, out=out[7]);
+    Mux4Way (a=a[8], b=b[8], c=c[8], d=d[8], sel=sel, out=out[8]);
+    Mux4Way (a=a[9], b=b[9], c=c[9], d=d[9], sel=sel, out=out[9]);
+    Mux4Way (a=a[10], b=b[10], c=c[10], d=d[10], sel=sel, out=out[10]);
+    Mux4Way (a=a[11], b=b[11], c=c[11], d=d[11], sel=sel, out=out[11]);
+    Mux4Way (a=a[12], b=b[12], c=c[12], d=d[12], sel=sel, out=out[12]);
+    Mux4Way (a=a[13], b=b[13], c=c[13], d=d[13], sel=sel, out=out[13]);
+    Mux4Way (a=a[14], b=b[14], c=c[14], d=d[14], sel=sel, out=out[14]);
+    Mux4Way (a=a[15], b=b[15], c=c[15], d=d[15], sel=sel, out=out[15]);
+}

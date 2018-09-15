@@ -1,0 +1,45 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/02/ALU.hdl
+
+// Modificado por Samuel Gadiel de Ávila.
+
+CHIP ALU {
+    IN
+        x[16], y[16],  // entrada de 16-bit
+        zx, // Zerar a entrada x
+        nx, // Negar a entrada x
+        zy, // Zerar a entrada y
+        ny, // Negar a entrada y
+        f,  // computa out = x + y (if 1) or x & y (if 0)
+        no; // nega a saida out
+
+    OUT
+        out[16],
+        zr, //(out == 0)? 1 : 0
+        ng; //(out <  0)? 1 : 0
+
+        PARTS:
+            Mux16 (a=x, b=false, sel=zx, out=zerarX);
+            Mux16 (a=y, b=false, sel=zy, out=zerarY);
+
+            Not16 (in=zerarX, out=barraX);
+            Not16 (in=zerarY, out=barraY);
+
+            Mux16 (a=zerarX, b=barraX, sel=nx, out=novoX);
+            Mux16 (a=zerarY, b=barraY, sel=ny, out=novoY);
+
+            Add16 (a=novoX, b=novoY, out=soma);
+            And16 (a=novoX, b=novoY, out=and);
+
+            Mux16 (a=and, b=soma, sel=f, out=saida);
+            Not16 (in=saida, out=barraSaida);
+
+            Mux16 (a=saida, b=barraSaida, sel=no,  out=out, out[15]=ng, out[0..7]=Bit0.7, out[8..15]=Bit8.15);
+
+            Or8Way (in=Bit0.7, out=Or1);
+            Or8Way (in=Bit8.15, out=Oreo);
+            Or(a=Or1, b=Oreo, out=or16Bits);
+            Not (in=or16Bits, out=zr);
+  }

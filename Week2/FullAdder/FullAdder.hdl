@@ -1,0 +1,19 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/02/FullAdder.hdl
+
+// Modificado por Samuel Gadiel de Ávila.
+
+CHIP FullAdder {
+    IN a, b, c;  // 1 Bit de entrada
+    
+    OUT sum,     // Bit direito da soma (a + b + c)
+        carry;   // Bit esquerdo da soma (a + b + c)
+
+    PARTS:
+    HalfAdder (a=a, b=b,           sum=somaParcial, carry=carry1);
+    HalfAdder (a=c, b=somaParcial, sum=sum,         carry=carry2);
+
+    Or (a=carry1, b=carry2, out=carry);
+}

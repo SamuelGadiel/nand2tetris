@@ -1,0 +1,30 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/Mux8Way16.hdl
+
+// Modificado por Samuel Gadiel de Ávila.
+
+CHIP Mux8Way16 {
+    IN a[16], b[16], c[16], d[16], e[16], f[16], g[16], h[16], sel[3];
+    OUT out[16];
+
+    PARTS:
+
+    Mux8Way (a=a[0], b=b[0], c=c[0], d=d[0], e=e[0], f=f[0], g=g[0], h=h[0], sel=sel, out=out[0]);
+    Mux8Way (a=a[1], b=b[1], c=c[1], d=d[1], e=e[1], f=f[1], g=g[1], h=h[1], sel=sel, out=out[1]);
+    Mux8Way (a=a[2], b=b[2], c=c[2], d=d[2], e=e[2], f=f[2], g=g[2], h=h[2], sel=sel, out=out[2]);
+    Mux8Way (a=a[3], b=b[3], c=c[3], d=d[3], e=e[3], f=f[3], g=g[3], h=h[3], sel=sel, out=out[3]);
+    Mux8Way (a=a[4], b=b[4], c=c[4], d=d[4], e=e[4], f=f[4], g=g[4], h=h[4], sel=sel, out=out[4]);
+    Mux8Way (a=a[5], b=b[5], c=c[5], d=d[5], e=e[5], f=f[5], g=g[5], h=h[5], sel=sel, out=out[5]);
+    Mux8Way (a=a[6], b=b[6], c=c[6], d=d[6], e=e[6], f=f[6], g=g[6], h=h[6], sel=sel, out=out[6]);
+    Mux8Way (a=a[7], b=b[7], c=c[7], d=d[7], e=e[7], f=f[7], g=g[7], h=h[7], sel=sel, out=out[7]);
+    Mux8Way (a=a[8], b=b[8], c=c[8], d=d[8], e=e[8], f=f[8], g=g[8], h=h[8], sel=sel, out=out[8]);
+    Mux8Way (a=a[9], b=b[9], c=c[9], d=d[9], e=e[9], f=f[9], g=g[9], h=h[9], sel=sel, out=out[9]);
+    Mux8Way (a=a[10], b=b[10], c=c[10], d=d[10], e=e[10], f=f[10], g=g[10], h=h[10], sel=sel, out=out[10]);
+    Mux8Way (a=a[11], b=b[11], c=c[11], d=d[11], e=e[11], f=f[11], g=g[11], h=h[11], sel=sel, out=out[11]);
+    Mux8Way (a=a[12], b=b[12], c=c[12], d=d[12], e=e[12], f=f[12], g=g[12], h=h[12], sel=sel, out=out[12]);
+    Mux8Way (a=a[13], b=b[13], c=c[13], d=d[13], e=e[13], f=f[13], g=g[13], h=h[13], sel=sel, out=out[13]);
+    Mux8Way (a=a[14], b=b[14], c=c[14], d=d[14], e=e[14], f=f[14], g=g[14], h=h[14], sel=sel, out=out[14]);
+    Mux8Way (a=a[15], b=b[15], c=c[15], d=d[15], e=e[15], f=f[15], g=g[15], h=h[15], sel=sel, out=out[15]);
+}
