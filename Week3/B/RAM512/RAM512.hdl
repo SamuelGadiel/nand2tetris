@@ -1,0 +1,30 @@
+// This file is part of the materials accompanying the book 
+// "The Elements of Computing Systems" by Nisan and Schocken, 
+// MIT Press. Book site: www.idc.ac.il/tecs
+// File name: projects/03/b/RAM512.hdl
+
+// Modificado por Samuel Gadiel de Ávila
+
+CHIP RAM512 {
+    IN in[16], load, address[9];
+    OUT out[16];
+
+    PARTS:
+	DMux8Way(in=load, sel=address[6..8],
+			 a=r1Load, b=r2Load, c=r3Load, d=r4Load,
+			 e=r5Load, f=r6Load, g=r7Load, h=r8Load);
+	
+	RAM64(in=in, load=r1Load, address=address[0..5], out=r1Out);
+	RAM64(in=in, load=r2Load, address=address[0..5], out=r2Out);
+	RAM64(in=in, load=r3Load, address=address[0..5], out=r3Out);
+	RAM64(in=in, load=r4Load, address=address[0..5], out=r4Out);
+	RAM64(in=in, load=r5Load, address=address[0..5], out=r5Out);
+	RAM64(in=in, load=r6Load, address=address[0..5], out=r6Out);
+	RAM64(in=in, load=r7Load, address=address[0..5], out=r7Out);
+	RAM64(in=in, load=r8Load, address=address[0..5], out=r8Out);
+	
+	Mux8Way16(a=r1Out, b=r2Out, c=r3Out, d=r4Out,
+			  e=r5Out, f=r6Out, g=r7Out, h=r8Out,
+			  sel=address[6..8], out=out);
+
+}

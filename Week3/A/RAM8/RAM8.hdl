@@ -1,0 +1,29 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/03/a/RAM8.hdl
+
+// Modificado por Samuel Gadiel de Ávila
+
+CHIP RAM8 {
+    IN in[16], load, address[3];
+    OUT out[16];
+
+    PARTS:
+    DMux8Way(in=load, sel=address, 
+			 a=r1Load, b=r2Load, c=r3Load, d=r4Load, 
+			 e=r5Load, f=r6Load, g=r7Load, h=r8Load);
+	
+	Register(in=in, load=r1Load, out=r1Out);
+	Register(in=in, load=r2Load, out=r2Out);
+	Register(in=in, load=r3Load, out=r3Out);
+	Register(in=in, load=r4Load, out=r4Out);
+	Register(in=in, load=r5Load, out=r5Out);
+	Register(in=in, load=r6Load, out=r6Out);
+	Register(in=in, load=r7Load, out=r7Out);
+	Register(in=in, load=r8Load, out=r8Out);
+	
+	Mux8Way16(a=r1Out, b=r2Out, c=r3Out, d=r4Out,
+			  e=r5Out, f=r6Out, g=r7Out, h=r8Out,
+			  sel=address, out=out);
+}

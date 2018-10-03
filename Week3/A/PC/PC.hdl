@@ -1,0 +1,21 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/03/a/PC.hdl
+
+// Modificado por Samuel Gadiel de Ávila
+
+CHIP PC {
+    IN in[16],load,inc,reset;
+    OUT out[16];
+
+    PARTS:
+	Mux16(a=tryLoad, b=false, sel=reset, out=nIn);
+	Mux16(a=tryInc, b=in, sel=load, out=tryLoad);
+	
+	Inc16(in=oOut, out=oOutInc);
+	Mux16(a=oOut, b=oOutInc, sel=inc, out=tryInc);
+	
+	Register(in=nIn, load=true, out=oOut, out=out);
+    
+}
