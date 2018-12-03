@@ -1,0 +1,9 @@
+## Golf Simulator
+## Version: 1.0
+## Autor: Samuel Gadiel de Ávila
+## Data: 28/11/2018
+
+## Projeto criado para a semana 09 do curso Nand2Tetris para a matéria de Elementos de Sistemas Computacionais (ESC)
+
+## Programa criado em Jack para simular pontuação num jogo de Golf
+## O programa consiste apenas em somar o resultado obtido em cada buraco e mostrar ao usuário no fim.
