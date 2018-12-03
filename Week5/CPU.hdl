@@ -1,0 +1,99 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/05/CPU.hdl
+
+// Modificado por Samuel Gadiel de Ávila
+
+CHIP CPU {
+
+    IN  inM[16],         // M value input  (M = contents of RAM[A])
+        instruction[16], // Instruction for execution
+        reset;           // Signals whether to re-start the current
+                         // program (reset==1) or continue executing
+                         // the current program (reset==0).
+
+    OUT outM[16],        // M value output
+        writeM,          // Write to M? 
+        addressM[15],    // Address in data memory (of M)
+        pc[15];          // address of next instruction
+
+    PARTS:
+
+	And16(a=instruction, b=true, out=nop1,
+		  out[15]=opcode, out[12]=instA, 
+		  out[6..11]=instC, out[3..5]=instD, out[0..2]=instJ);
+		  
+	And16(a[0..5]=instC, a[6..15]=true, b=true, out=nop2,
+		  out[5]=zx, out[4]=nx, 
+		  out[3]=zy, out[2]=ny,
+		  out[1]=f,  out[0]=no);
+		  
+	And16(a[0..2]=instD, a[3..15]=true, b=true, out=nop3,
+		  out[0]=tryStoreM, out[1]=tryStoreD, out[2]=tryStoreA);
+		  
+
+	Mux16(a=instruction, b=outALU, sel=opcode, out=inAReg);
+	
+
+	Not(in=opcode, out=ainst);
+	Or(a=ainst, b=tryStoreA, out=loadAReg);
+	ARegister(in=inAReg, load=loadAReg, 
+	          out=outAReg);
+	
+
+	And(a=tryStoreD, b=opcode, out=loadD);
+	DRegister(in=outALU, load=loadD, out=outDReg, out=xALU);
+	
+
+	Mux16(a=outAReg, b=inM, sel=instA, out=yALU);
+	
+	ALU(x=xALU, y=yALU,
+		zx=zx, nx=nx, zy=zy, ny=ny,
+		f=f, no=no,
+		out=outALU, zr=zr, ng=ng);
+	
+
+	DMux8Way(in=true, sel=instJ,
+			 a=noJMP, b=JGT, c=JEQ, d=JGE,
+			   e=JLT, f=JNE, g=JLE, h=uncJMP);
+	
+
+	Not(in=zr, out=notzr);
+	Not(in=ng, out=notng);
+	
+	And(a=notzr, b=notng, out=positiveOut);
+	And(a=notzr,    b=ng, out=negativeOut);
+	And(a=zr,    b=notng, out=zeroOut);
+	
+	And(a=positiveOut, b=true, out=GT);
+	And(a=zeroOut,     b=true, out=EQ);
+	And(a=negativeOut, b=true, out=LT);
+	
+	Or(a=GT, b=EQ, out=GE);
+	Or(a=GT, b=LT, out=NE);
+	Or(a=LT, b=EQ, out=LE);
+	
+
+	And(a=JGT, b=GT, out=jmpGT);
+	And(a=JEQ, b=EQ, out=jmpEQ);
+	And(a=JGE, b=GE, out=jmpGE);
+	And(a=JLT, b=LT, out=jmpLT);
+	And(a=JNE, b=NE, out=jmpNE);
+	And(a=JLE, b=LE, out=jmpLE);
+	
+	Or8Way(in[0]=false, in[1]=jmpGT, in[2]=jmpEQ, in[3]=jmpGE,
+		   in[4]=jmpLT, in[5]=jmpNE, in[6]=jmpLE, in[7]=uncJMP,
+		   out=tryJMP);
+		   
+
+	And(a=tryJMP, b=opcode, out=loadPC);
+
+	PC(in=outAReg, load=loadPC, inc=true, reset=reset, out=oldPC);
+	
+
+	And16(a=outALU, b=true, out=outM);
+	And(a=tryStoreM, b=opcode, out=writeM);
+	And16(a=outAReg, b=true, out=nop4, out[0..14]=addressM);
+	And16(a=oldPC, b=true, out=nop5, out[0..14]=pc);
+}

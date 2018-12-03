@@ -1,0 +1,20 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/05/Computer.hdl
+
+// Modificado por Samuel Gadiel de Ávila
+
+CHIP Computer {
+
+    IN reset;
+
+    PARTS:
+	
+    ROM32K(address=romAddress, out=instruction);
+	
+	CPU(inM=inM, instruction=instruction, reset=reset,
+		outM=outM, writeM=writeM, addressM=addressM, pc=romAddress);
+		
+	Memory(in=outM, address=addressM, load=writeM, out=inM);
+}

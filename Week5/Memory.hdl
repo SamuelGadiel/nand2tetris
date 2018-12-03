@@ -1,0 +1,46 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/05/Memory.hdl
+
+// Modificado por Samuel Gadiel de Ávila
+
+CHIP Memory {
+    IN in[16], load, address[15];
+    OUT out[16];
+
+    PARTS:
+
+	
+	And16(a[0..14]=address, a[15]=true, b=true, out=nop1,
+		  out[13..14]=memSel, out[0..13]=ramAddress,
+		  out[0..12]=screenAddress);
+	
+
+    DMux4Way(in=load, sel=memSel,
+			 a=loadRAM1, b=loadRAM2, c=loadScreen, d=nop2);
+	
+	Or(a=loadRAM1, b=loadRAM2, out=loadRAM);
+	
+	RAM16K(in=in, load=loadRAM,
+		   address=ramAddress, out=outRAM);
+	
+	Screen(in=in, load=loadScreen,
+		   address=screenAddress, out=outScreen);
+
+	Keyboard(out=outKeyboard);
+	
+
+	Mux4Way16(a=outRAM, b=outRAM, c=outScreen, d=outKeyboard,
+			  sel=memSel, out=out);
+}
+
+
+
+
+
+
+
+
+
+
