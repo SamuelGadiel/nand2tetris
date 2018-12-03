@@ -1,0 +1,304 @@
+function Square.new 0
+push constant 0
+call Memory.alloc 1
+push argument 0
+pop field 0
+push argument 1
+pop field 1
+push argument 2
+pop field 2
+call draw 1
+pop temp 0
+push pointer 0
+return
+function Square.dispose 1
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+pop constant 0
+return
+function Square.draw 1
+push argument 0
+pop pointer 0
+push constant 1
+neg
+call Screen.setColor 1
+pop temp 0
+push field 0
+push field 1
+push field 0
+push field 2
+add
+push field 1
+push field 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+pop constant 0
+return
+function Square.erase 1
+push argument 0
+pop pointer 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push field 0
+push field 1
+push field 0
+push field 2
+add
+push field 1
+push field 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+pop constant 0
+return
+function Square.incSize 1
+push argument 0
+pop pointer 0
+push field 1
+push field 2
+add
+push constant 254
+lt
+push field 0
+push field 2
+add
+push constant 510
+lt
+and
+if-goto IF_TRUE_0
+goto IF_FALSE_0
+label IF_TRUE_0
+call erase 1
+pop temp 0
+push field 2
+push constant 2
+add
+pop field 2
+call draw 1
+pop temp 0
+goto IF_CONTINUATION_0
+label IF_CONTINUATION_0
+pop constant 0
+return
+function Square.decSize 1
+push argument 0
+pop pointer 0
+push field 2
+push constant 2
+gt
+if-goto IF_TRUE_1
+goto IF_FALSE_1
+label IF_TRUE_1
+call erase 1
+pop temp 0
+push field 2
+push constant 2
+sub
+pop field 2
+call draw 1
+pop temp 0
+goto IF_CONTINUATION_1
+label IF_CONTINUATION_1
+pop constant 0
+return
+function Square.moveUp 1
+push argument 0
+pop pointer 0
+push field 1
+push constant 1
+gt
+if-goto IF_TRUE_2
+goto IF_FALSE_2
+label IF_TRUE_2
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push field 0
+push field 1
+push field 2
+add
+push constant 1
+sub
+push field 0
+push field 2
+add
+push field 1
+push field 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push field 1
+push constant 2
+sub
+pop field 1
+push constant 1
+neg
+call Screen.setColor 1
+pop temp 0
+push field 0
+push field 1
+push field 0
+push field 2
+add
+push field 1
+push constant 1
+add
+call Screen.drawRectangle 4
+pop temp 0
+goto IF_CONTINUATION_2
+label IF_CONTINUATION_2
+pop constant 0
+return
+function Square.moveDown 1
+push argument 0
+pop pointer 0
+push field 1
+push field 2
+add
+push constant 254
+lt
+if-goto IF_TRUE_3
+goto IF_FALSE_3
+label IF_TRUE_3
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push field 0
+push field 1
+push field 0
+push field 2
+add
+push field 1
+push constant 1
+add
+call Screen.drawRectangle 4
+pop temp 0
+push field 1
+push constant 2
+add
+pop field 1
+push constant 1
+neg
+call Screen.setColor 1
+pop temp 0
+push field 0
+push field 1
+push field 2
+add
+push constant 1
+sub
+push field 0
+push field 2
+add
+push field 1
+push field 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+goto IF_CONTINUATION_3
+label IF_CONTINUATION_3
+pop constant 0
+return
+function Square.moveLeft 1
+push argument 0
+pop pointer 0
+push field 0
+push constant 1
+gt
+if-goto IF_TRUE_4
+goto IF_FALSE_4
+label IF_TRUE_4
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push field 0
+push field 2
+add
+push constant 1
+sub
+push field 1
+push field 0
+push field 2
+add
+push field 1
+push field 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push field 0
+push constant 2
+sub
+pop field 0
+push constant 1
+neg
+call Screen.setColor 1
+pop temp 0
+push field 0
+push field 1
+push field 0
+push constant 1
+add
+push field 1
+push field 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+goto IF_CONTINUATION_4
+label IF_CONTINUATION_4
+pop constant 0
+return
+function Square.moveRight 1
+push argument 0
+pop pointer 0
+push field 0
+push field 2
+add
+push constant 510
+lt
+if-goto IF_TRUE_5
+goto IF_FALSE_5
+label IF_TRUE_5
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push field 0
+push field 1
+push field 0
+push constant 1
+add
+push field 1
+push field 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push field 0
+push constant 2
+add
+pop field 0
+push constant 1
+neg
+call Screen.setColor 1
+pop temp 0
+push field 0
+push field 2
+add
+push constant 1
+sub
+push field 1
+push field 0
+push field 2
+add
+push field 1
+push field 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+goto IF_CONTINUATION_5
+label IF_CONTINUATION_5
+pop constant 0
+return
