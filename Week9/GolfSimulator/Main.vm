@@ -1,0 +1,18 @@
+function Main.main 1
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+call GolfGame.new 0
+pop local 0
+push local 0
+call GolfGame.play 1
+pop temp 0
+push local 0
+call GolfGame.printScore 1
+pop temp 0
+push local 0
+call GolfGame.dispose 1
+pop temp 0
+push constant 0
+return

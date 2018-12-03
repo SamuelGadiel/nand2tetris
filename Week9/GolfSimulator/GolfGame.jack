@@ -1,0 +1,37 @@
+
+class GolfGame {
+    field int score;
+
+    constructor GolfGame new() {
+        let score = 0;
+        return this;
+    }
+
+
+    method void play() {
+        var int numHoles;
+        var int hole;
+
+        let numHoles = 9;
+        let hole = 0;
+        while (hole < numHoles) {
+            let hole = hole + 1;
+            let score = score + Player.playHole(hole);
+        }
+        return;
+    }
+
+
+    method void printScore() {
+        do Output.printString("Score foi ");
+        do Output.printInt(score);
+        do Output.println();
+
+        return;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+}

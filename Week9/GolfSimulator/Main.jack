@@ -1,0 +1,17 @@
+// Initializes the Golfgame and starts playing it with
+// a certain number of players
+
+class Main {
+    function void main() {
+        var GolfGame game;
+
+        do Screen.setColor(true);
+        let game = GolfGame.new();
+        do game.play();
+        do game.printScore();
+
+        do game.dispose();
+
+        return;
+    }
+}
