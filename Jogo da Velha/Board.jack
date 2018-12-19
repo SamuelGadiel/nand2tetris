@@ -1,0 +1,250 @@
+class Board {
+  field Array squares;
+  static Array locationsx;
+  static Array locationsy;
+
+  
+  constructor Board new(){
+    // Inicializa um novo tabuleiro de jogo
+    let locationsx = Array.new(9);
+    let locationsy = Array.new(9);
+
+    // São as posições das coordenadas x, y de cada local
+    // Jack não possui função modulo ( % ), por isso foi feito assim
+    let locationsx[0] = 192;
+    let locationsx[1] = 256;
+    let locationsx[2] = 320;
+    let locationsx[3] = 192;
+    let locationsx[4] = 256;
+    let locationsx[5] = 320;
+    let locationsx[6] = 192;
+    let locationsx[7] = 256;
+    let locationsx[8] = 320;
+
+    let locationsy[0] = 64;
+    let locationsy[1] = 64;
+    let locationsy[2] = 64;
+    let locationsy[3] = 128;
+    let locationsy[4] = 128;
+    let locationsy[5] = 128;
+    let locationsy[6] = 192;
+    let locationsy[7] = 192;
+    let locationsy[8] = 192;
+
+    let squares = Array.new(9);
+
+    do drawGrid();
+    return this;
+  }
+
+  method int chooseMove(boolean x){
+    var int selection;
+    var int key;
+    let selection = 4;
+    do drawReticle(selection);
+    
+    while(true){
+      let key = Keyboard.keyPressed();
+      if(key = 132){ // Seta para a direita
+        do eraseReticle(selection);
+        let selection = sanitizeLocation(selection + 1);
+        do drawReticle(selection);
+      }
+      if(key = 130){ // Seta para a esquerda
+        do eraseReticle(selection);
+        let selection = sanitizeLocation(selection - 1);
+        do drawReticle(selection);
+      }
+      if(key = 131){ // Seta para cima
+        do eraseReticle(selection);
+        let selection = sanitizeLocation(selection - 3);
+        do drawReticle(selection);
+      }
+      if(key = 133){ // Seta para baixo
+        do eraseReticle(selection);
+        let selection = sanitizeLocation(selection + 3);
+        do drawReticle(selection);
+      }
+      if(key = 128){ // Enter
+        do eraseReticle(selection);
+        if(validSelection(selection)){
+          do move(selection, x);
+          return selection;
+        }else{
+          do drawReticle(selection);
+        }
+      }
+    }
+    return 4;
+  }
+
+  method boolean validSelection(int location){
+    // Checa se a posição selecionada é valida
+    // Por exemplo: Não pode ser um quadrado já preenchido.
+    if(~(squares[location] = -1) & ~(squares[location] = 1)){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  method void move(int location, boolean x){
+    // Coloca  um X ou um O na posição escolhida
+    // if x = true      -> coloca o X
+    // if x = false     -> coloca o O
+    if(x){
+      let squares[location] = 1;
+    }else{
+      let squares[location] = -1;
+    }
+    
+    /*do Output.printInt(squares[location]);*/
+    /*do Output.println();*/
+    do drawMove(location, x);
+    return;
+  }
+
+  method void drawGrid(){
+    // Desenha as linhas do tabuleiro
+    do Screen.drawLine(224, 32, 224, 224);  // linha vertical da esquerda
+    do Screen.drawLine(288, 32, 288, 224);  // linha vertical da direita
+    do Screen.drawLine(160, 96, 352, 96);   // linha horizontal de cima
+    do Screen.drawLine(160, 160, 352, 160); // linha horizontal de baixo
+    return;
+  }
+
+  method void drawO(int x, int y){
+    // Desenha um O centralizado nas coordenadas x, y dadas
+    
+    // Faz um circulo preto de raio 20 e depois um circulo branco de raio 19
+    // Isso resulta em somente o traço externo do circulo
+    do Screen.drawCircle(x, y, 20);
+    do Screen.setColor(false);
+    do Screen.drawCircle(x, y, 19);
+    do Screen.setColor(true);
+    return;
+  }
+
+  method void drawX(int x, int y){
+    // Desenha um X centralizado nas coordenadas x, y dadas
+    
+    // Toma pontos com distancia 15 das coordenadas x, y e desenha linhas entre esses pontos
+    var int left, right, top, bottom;
+
+    let left = x - 15;
+    let right = x + 15;
+    let top = y + 15;
+    let bottom = y - 15;
+
+    do Screen.drawLine(left, top, right, bottom);
+    do Screen.drawLine(right, top, left, bottom);
+
+    return;
+  }
+
+  method void eraseReticle(int location){
+    // Apaga o quadrado de seleção da posição redesenhando ele com a cor branca
+    let location = sanitizeLocation(location);
+    do Screen.setColor(false);
+    do drawReticle(location);
+    do Screen.setColor(true);
+    return; 
+  }
+
+  method void drawReticle(int location){
+    // Desenha um quadrado de seleção na posição dada
+    
+    // Intencionalmente nao coloca a cor (preto ou branco)
+    // Isso é pra que dê pra usar essa função também para apagar o quadrado se chamada pela eraseReticle
+    var int left, right, top, bottom;
+    var int x, y;
+    let location = sanitizeLocation(location);
+    let x = locationsx[location];
+    let y = locationsy[location];
+
+    let left = x - 22;
+    let right = x + 22;
+    let top = y + 22;
+    let bottom = y - 22;
+    
+    do Screen.drawLine(left, top, left, bottom);
+    do Screen.drawLine(left, top, right, top);
+    do Screen.drawLine(right, top, right, bottom);
+    do Screen.drawLine(right, bottom, left, bottom);
+
+    return; 
+  }
+
+  method void drawMove(int location, boolean x){
+    // Dada uma posição desenha um X se x = true
+    // Caso contrario desenha um O
+    var int xcenter;
+    var int ycenter;
+    let location = sanitizeLocation(location);
+    let xcenter = locationsx[location];
+    let ycenter = locationsy[location];
+    
+    if(x){
+      do drawO(xcenter, ycenter);
+    }else{
+      do drawX(xcenter, ycenter);
+    }
+    return;
+  }
+
+  method int sanitizeLocation(int location){
+    // Garante que a posição não é fora do tabuleiro
+    // Ou seja, < 0 ou > 8
+    if((location > -1) & (location < 9)){
+      return location;
+    }
+    if(location < 0){
+      return 0;
+    }
+    if(location > 8){
+      return 8;
+    }
+    return 4;
+  }
+
+  method boolean winner(){
+  // Checa todo o tabuleiro usando victoryOn para ver se tem um vencedor
+    if((victoryOn(squares[0], squares[1], squares[2])) |
+        (victoryOn(squares[3], squares[4], squares[5])) |
+        (victoryOn(squares[6], squares[7], squares[8])) |
+        (victoryOn(squares[0], squares[3], squares[6])) |
+        (victoryOn(squares[1], squares[4], squares[7])) |
+        (victoryOn(squares[2], squares[5], squares[8])) |
+        (victoryOn(squares[0], squares[4], squares[8])) |
+        (victoryOn(squares[2], squares[4], squares[6]))){
+      return true;
+    }
+    return false;
+  }
+
+  method string idToString(int id){
+    // O tabuleiro do jogo é representado como um vetor de posições, -1 para X, 1 para O.
+    // Essa função traduz para strings para que possamos mostrar a saida para o usuário
+    if(id = -1){
+      return "X";
+    }else{
+      return "O";
+    }
+  }
+
+  method boolean victoryOn(int x, int y, int z){
+    // Deve ser chamada com os valores de 3 posições alinhadas.
+    // Checa se as 3 posições possui algum simbolo e se o simbolo é o mesmo
+    // Se as 3 posições tiverem o mesmo simbolo declara como vencedor
+    if((x = 0) | (y = 0) | (z = 0)){
+      return false;
+    }
+    if((x = y) & (y = z)){
+      do Output.printString("Temos um vencedor! Parabens para ");
+      do Output.printString(idToString(x));
+      do Output.printString("!");
+      return true;
+    }
+    return false;
+  }
+}

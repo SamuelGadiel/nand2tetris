@@ -1,0 +1,64 @@
+function Main.main 5
+call Board.new 0
+pop local 0
+push constant 16
+call String.new 1
+push constant 88
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 106
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 103
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 112
+call String.appendChar 2
+push constant 114
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 109
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 114
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 33
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+call Output.println 0
+pop temp 0
+push constant 0
+pop local 2
+push constant 0
+pop local 3
+label WHILE_EXP0
+push local 3
+not
+not
+if-goto WHILE_END0
+push local 0
+push local 2
+call Board.chooseMove 2
+pop temp 0
+push local 0
+call Board.winner 1
+pop local 3
+push local 2
+not
+pop local 2
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
