@@ -23,7 +23,7 @@ The course is divided in 12 weeks and a final project, as follows
 
 ### Software hierarchy
 - [Assembler](https://github.com/SamuelGadiel/nand2tetris/tree/master/Week6) - Hack Assembler in **Python**.
-- Virtual Machine translator - Translate VM language into Hack assembly language in PHP.
+- Virtual Machine translator - Translate VM language into Hack assembly language in Python.
   - [Virtual Machine I - Stack arithmetic](https://github.com/SamuelGadiel/nand2tetris/tree/master/Week7)
   - [Virtual machine II - Program control](https://github.com/SamuelGadiel/nand2tetris/tree/master/Week8)
 - [High-Level Language](https://github.com/SamuelGadiel/nand2tetris/tree/master/Week9) - Introducing Jack programming language and coding Tetris.
