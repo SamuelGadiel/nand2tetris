@@ -30,5 +30,6 @@ The course is divided in 12 weeks and a final project, as follows
 ## Final Project
 A [Tic-Tac-Toe](https://github.com/SamuelGadiel/nand2tetris/tree/master/Jogo%20da%20Velha) game made with the Jack language
 
+## Motivation
 The course idea is to understand how a computer works, from the NAND logic gate to a high-level code.
 ![Course progression image](https://miro.medium.com/max/1400/1*MAeq1jz7XNpWQeJIx7U72Q.png)
